@@ -30,7 +30,7 @@ body {
     height: 350px;
 }
 
-.answer {
+.option {
     font-size: 34px;
     margin-top: 30px;
     margin-left: 75px;
@@ -43,13 +43,22 @@ body {
     background-color: whitesmoke;
 }
 
-.answer:hover {
+.option:hover {
     background-color: #BD4444;
+    transition: 0.35s ease;
     color: bisque;
     border-color: bisque;
+}
+
+button:focus {
+    outline: 0;
 }
 
 .timer {
     font-size: 20px;
     color: #BD4444;
+}
+
+button {
+    border: none;
 }
