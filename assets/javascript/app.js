@@ -1,16 +1,13 @@
 $(document).ready(function () {
 
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ///////////////object named arr that contains the QUESTION variable, ANSWER variable,/////////////////////////
-    ///////////////////////////////////CHOICES variable, and IMAGE variable///////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
     var after;
     var timeFix;
     var timeCounter = 30;
+    var questionCounter = 0;
 
+
+
+    //A timer that starts at 30 and clocks down till 0
     function subtractTime() {
         timeCounter = 31
         timeFix = setInterval(function () {
@@ -18,10 +15,21 @@ $(document).ready(function () {
             $("#timer").text(timeCounter);
             if (timeCounter <= 0) {
                 clearInterval(timeFix);
+
+                questionCounter++;
+
+                document.getElementById("ask").innerHTML = questionArr[questionCounter].question
+                document.getElementById("image").src = questionArr[questionCounter].image;
+                $(".selection1").text(questionArr[questionCounter].choices[0]);
+                $(".selection2").text(questionArr[questionCounter].choices[1]);
+                $(".selection3").text(questionArr[questionCounter].choices[2]);
+                $(".selection4").text(questionArr[questionCounter].choices[3]);
+
             }
         }, 1000);
     }
 
+    //function to change questions
     function questionChange() {
         (document.getElementById("ask").innerHTML = questionArr[questionCounter].question)
         document.getElementById("image").src = questionArr[questionCounter].image;
@@ -35,11 +43,13 @@ $(document).ready(function () {
 
     }
 
-
+    //once user answers correctly, it is given this amount of time before it switches to the next answer
     function results() {
-        after = setTimeout(questionChange, 100);
+        after = setTimeout(questionChange, 500);
     }
 
+
+    //object that contains the question, choices, answers, and images
     var one = {
         question: "Who Created The American Flag?",
         choices: ["Betsy Cross", "Betsy Ross", "Betsy Moss", "Betsy Rose"],
@@ -148,14 +158,13 @@ $(document).ready(function () {
         unaswered: ""
     }
 
-
-    var questionCounter = 0;
-    var questionArr = [one, two, three, four, five,
-                       six, seven, eight, nine, ten,
-                       eleven, twelve, thirteen, fourteen,
-                       fifteen, sixteen, seventeen];
+    //array that holds the object
+    var questionArr = [one, two, three, four, five, six, seven, eight, nine, ten,
+                       eleven, twelve, thirteen, fourteen, fifteen, sixteen, seventeen];
 
     subtractTime();
+
+    //start of the game
     if (document.getElementById("ask").innerHTML = one.question) {
         document.getElementById("image").src = one.image;
 
@@ -166,25 +175,29 @@ $(document).ready(function () {
 
         $(".option").click(function () {
 
-            if (this.value == questionArr[questionCounter].answer) {
+            if (this.value == questionArr[questionCounter].answer && questionCounter < questionArr.length) {
                 clearInterval(timeFix);
                 questionCounter++;
                 results();
+                var audio = document.getElementById("correct");
+                audio.play();
+
             } else {
                 console.log("wrong");
+                var wrongAudio = document.getElementById("wrong");
+                wrongAudio.play();
 
             }
         })
 
-    } else if (document.getElementById("ask").innerHTML = arr.questionArr[questionCounter].question) {
-        document.getElementById("image").src = arr.questionArr[questionCounter].image;
+    } else if (document.getElementById("ask").innerHTML = questionArr[questionCounter].question) {
+        document.getElementById("image").src = questionArr[questionCounter].image;
 
-        $(".selection1").text(arr.questionArr[questionCounter].choices[0]);
-        $(".selection2").text(arr.questionArr[questionCounter].choices[1]);
-        $(".selection3").text(arr.questionArr[questionCounter].choices[2]);
-        $(".selection4").text(arr.questionArr[questionCounter].choices[3]);
+        $(".selection1").text(questionArr[questionCounter].choices[0]);
+        $(".selection2").text(questionArr[questionCounter].choices[1]);
+        $(".selection3").text(questionArr[questionCounter].choices[2]);
+        $(".selection4").text(questionArr[questionCounter].choices[3]);
 
     }
-
 
 });

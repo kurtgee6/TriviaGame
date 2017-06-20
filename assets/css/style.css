@@ -62,3 +62,9 @@ button:focus {
 button {
     border: none;
 }
+
+#ask {
+    color: #5c3422;
+    font-size: 36px;
+    margin: 0;
+}
